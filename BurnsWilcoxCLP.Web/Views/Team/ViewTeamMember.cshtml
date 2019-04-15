@@ -1,0 +1,28 @@
+﻿@model List<BurnsWilcoxCLP.Models.TeamEntity>
+
+@using System.Collections
+@{
+    ViewBag.Title = "Index";
+    Layout = null;
+}
+
+
+<div class="page-container">
+    <div class="page-content">
+        <div class="content-wrapper">
+            <fieldset>
+                    <div class="col-sm-12">
+                     
+                            @for (int i = 0; i < @Model.Count; i++)
+                            {
+                                <p>@Model[i].TeamMemberName</p>
+                            }
+                 
+                    </div>
+            </fieldset>
+        </div>
+    </div>
+</div>
+
+        
+        

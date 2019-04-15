@@ -1,0 +1,17 @@
+﻿#report {
+        position: relative;
+        width: 100%;
+        height: 800px;
+    }
+
+    .dashboard_amount, .panelCategory.selected .Example {
+        display: none;
+    }
+
+    .selected .dashboard_amount, .panelCategory .Example {
+        display: block;
+    }
+
+    .k-grid .k-header {
+        /*display: block;*/
+    }

@@ -1,0 +1,125 @@
+﻿  @model BurnsWilcoxCLP.Models.LoginEntity
+@{
+    ViewBag.Title = "Index";
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Burns &amp; Wilcox</title>
+    @Styles.Render("~/Content/Styles")
+    @Styles.Render("~/Content/ui")
+    @Styles.Render("~/Content/TelerikReport")
+    @Scripts.Render("~/Content/scripts")
+   
+</head>
+<body>
+    <div class="page-container login-container login_background">
+        <div class="page-content">
+            <div class="content-wrapper">
+                <div class="content">
+
+                    @Html.AntiForgeryToken()
+                    @Html.ValidationSummary(true)
+                    @using (Html.BeginForm("Index", "Login", FormMethod.Post, new { @id = "formLogin" }))
+                    {
+                        <div class="panel panel-body login-form">
+                            @Html.Partial("_Notifications")
+                            <div class="text-center">
+                                <div class="icon-object border-slate-300 text-slate-300"><i class="fa fa-user-secret"></i></div>
+                                <h5 class="content-group">Login to Burns & Wilcox </h5>
+                            </div>
+                            <div class="form-group has-feedback has-feedback-left">
+                                @Html.TextBoxFor(m => m.EmailAddress, new { @placeholder = "Email", @autofocus = "", @class = "form-control", @tabindex = "1"})
+                                @Html.ValidationMessageFor(m => m.EmailAddress, null, new { @class = "validation-error-label" })
+
+                                <div class="form-control-feedback">
+                                    <i class="fa fa-user text-muted"></i>
+                                </div>
+                            </div>
+                            <div class="form-group has-feedback has-feedback-left">
+                                @Html.PasswordFor(m => m.Password, new { @placeholder = "Password", @autofocus = "", @class = "form-control", @tabindex = "2" })
+                                @Html.ValidationMessageFor(m => m.Password, null, new { @class = "validation-error-label" })
+                                <div class="form-control-feedback">
+                                    <i class="fa fa-lock text-muted"></i>
+                                </div>
+                            </div>
+                            <div class="text-right forgot-password">
+                                <a href="#" id="btnchangepassword">Forgot Password</a>
+                            </div>
+                            <div class="form-group">
+                                <button type="submit" tabindex="3"  id="btnSubmit" class="btn btn-primary btn-block">Sign in <i class="icon-circle-right2 position-right"></i></button>
+                            </div>
+                            
+                            <div class="text-center">
+                                <a href="@Url.Action("UserRegistration", "Login")">Register as a new user</a>
+                            </div>
+             
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+   
+   <div class="footer"><p>Copyrights 2017 Burns & Wilcox</p></div>
+    <div class="modal fade" id="DivChangepasswordModel">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true" id="Closemodel">×</button>
+                    <h4 class="modal-title">Reset Password</h4>
+                </div>
+                <div class="modal-body">
+                    <div>
+                        <div class="form-group">
+                            <div class="input-user input-icon">
+                                <input placeholder="Enter your username or email" class="form-control" id="email">
+                            </div>
+                        </div>
+                        <button class="btn btn-primary btn-block" onclick="ForgetPasswordLink()">Get new password</button>
+                    </div>
+                  
+                </div>
+            </div>
+        </div>
+    </div>
+    
+</body>
+</html>
+<script>
+ 
+    $("#btnchangepassword").click(function () {
+        $("#DivChangepasswordModel").modal('show');
+
+    })
+
+ function ForgetPasswordLink()
+    {
+        var EmailAdress = $("#email").val();
+        if (EmailAdress == "")
+        {
+       
+            alert("Please Enter The Email")
+        }
+        else
+        {
+     
+            $.ajax({
+
+                url: '@Url.Action("ForgetPasswordLink", "Login")?EmailAdress=' + EmailAdress,
+                datatype: "JSON",
+                success: function (data) {
+                    $("#DivChangepasswordModel").modal('hide');
+
+                }
+
+            });
+        }
+
+     
+ }
+    </script>

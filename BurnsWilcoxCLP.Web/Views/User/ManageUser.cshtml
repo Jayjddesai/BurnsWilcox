@@ -1,0 +1,283 @@
+﻿@model  BurnsWilcoxCLP.Models.UserAgency
+@using BurnsWilcoxCLP.Models;
+@using System.Collections
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<ul class="breadcrumb">
+    <li><a href="index.html"><i class="icon-home2 position-left"></i> Home</a></li>
+    @if (Model.UserId == 0)
+    {
+        <li class="active">Add User</li>
+    }
+    else
+    {
+        <li class="active">Manage User</li>
+    }
+    
+</ul>
+@Html.Partial("_Notifications")
+<div class="panel panel-flat">
+
+    <div class="panel-body">
+        <div class="panel-heading">
+            @if (Model.UserId == 0)
+            {
+                <h5 class="panel-title"><b>Add User</b></h5>
+            }
+            else
+            {
+                <h5 class="panel-title"><b>Manage User</b></h5>
+            }
+            
+        </div>
+    </div>
+    <fieldset>
+        <div class="row">
+            <div class="col-sm-12">
+                @using (Html.BeginForm("ManageUser", "User", FormMethod.Post, new { @enctype = "multipart/form-data", @id = "UserForm" }))
+                {
+                    @Html.HiddenFor(m => m.UserId)
+                    @Html.HiddenFor(m => m.Password)
+                    @Html.HiddenFor(m => m.ConfirmPassword)
+                    @Html.HiddenFor(m => m.CreatedBy)
+                    @Html.HiddenFor(m => m.CreatedOn)
+                    @Html.HiddenFor(m => m.UserTypeId)
+                    @Html.HiddenFor(m => m.UserTypeName)
+                    @Html.HiddenFor(m => m.AgencyTypeName)
+                    @Html.HiddenFor(m => m.IsUserVerified)
+                    @Html.HiddenFor(m => m.IsEmailVerified)
+                    @Html.HiddenFor(m => m.IsActive)
+                    @Html.HiddenFor(m => m.AgencyId)
+
+
+                    <div class="page-container">
+                        <div class="col-lg-12 client-registration">
+                            <div class="panel panel-default">
+                                <div class="panel-heading cursor-pointer mb-20" data-toggle="collapse" data-target="#div1" id="toggle1" onclick="ToggleClass(this.id);">
+                                    <h3 class="panel-title">
+                                        <i class="fa fa-minus mr-10 "></i>
+                                        User Information
+                                    </h3>
+                                </div>
+                                <div id="div1" class="collapse panel-body mb-20 collapse in">
+                                    <div class="row">
+                                        <div class="col-sm-4">
+                                            <div class="form-group">
+                                                <label>Display Name:</label>
+                                                @Html.TextBoxFor(m => m.DisplayName, new { @placeholder = "DisplayName", @class = "form-control", @tabindex = "1" })
+                                                @Html.ValidationMessageFor(m => m.DisplayName, null, new { @class = "validation-error-label" })
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <div class="form-group">
+                                                <label>Email Address:</label>
+                                                @Html.TextBoxFor(m => m.EmailAddress, new { @placeholder = "Email Address", @class = "form-control", @tabindex = "2" })
+                                                @Html.ValidationMessageFor(m => m.EmailAddress, null, new { @class = "validation-error-label" })
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <div class="form-group">
+                                                <label>Access Code:</label>
+                                                @Html.TextBoxFor(m => m.AccessCode, new { @placeholder = "Access Code", @class = "form-control", @tabindex = "3" })
+                                                @Html.ValidationMessageFor(m => m.AccessCode, null, new { @class = "validation-error-label" })
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        @if (Model.UserId == 0)
+                                        {
+                                            <div class="col-sm-4">
+                                                <div class="form-group ">
+                                                    <label>Password:</label>
+                                                    @Html.PasswordFor(m => m.Password, new { @placeholder = "Password", @class = "form-control", @tabindex = "4" })
+                                                    @Html.ValidationMessageFor(m => m.Password, null, new { @class = "validation-error-label" })
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <div class="form-group">
+                                                    <label>Confirm Password:</label>
+                                                    @Html.PasswordFor(m => m.ConfirmPassword, new { @placeholder = "Confirm Password", @class = "form-control", @tabindex = "5" })
+                                                    @Html.ValidationMessageFor(m => m.ConfirmPassword, null, new { @class = "validation-error-label" })
+                                                </div>
+                                            </div>
+                                        }
+                                    </div>
+
+
+                                </div>
+                                <div class="panel-heading cursor-pointer mb-20" data-toggle="collapse" id="toggle2" data-target="#div2" onclick="ToggleClass(this.id);">
+                                    <h3 class="panel-title">
+                                        <i class="fa fa-minus"></i>
+                                        Agency Details
+                                    </h3>
+                                </div>
+                                <div id="div2" class="collapse panel-body mb-20 collapse in">
+                                    <div class="row">
+                                        <div class="col-sm-4">
+                                            <div class="form-group">
+                                                <label>Agency Name:</label>
+                                                @Html.TextBoxFor(m => m.Name, new { @placeholder = "Agency Name", @class = "form-control", @tabindex = "6" })
+                                                @Html.ValidationMessageFor(m => m.Name, null, new { @class = "validation-error-label" })
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <div class="form-group">
+                                                <label>Address:</label>
+                                                @Html.TextAreaFor(m => m.Address, new { @placeholder = "Address", @class = "form-control", @tabindex = "7" })
+                                                @Html.ValidationMessageFor(m => m.Address, null, new { @class = "validation-error-label" })
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <div class="form-group">
+                                                <label>Zip:</label>
+                                                @Html.TextBoxFor(m => m.Zip, new { @placeholder = "Zip", @class = "form-control", @tabindex = "8" })
+                                                @Html.ValidationMessageFor(m => m.Zip, null, new { @class = "validation-error-label" })
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+
+                                        <div class="col-sm-4">
+                                            <div class="form-group">
+                                                <label>City:</label>
+                                                @Html.TextBoxFor(m => m.City, new { @placeholder = "City", @class = "form-control", @tabindex = "9" })
+                                                @Html.ValidationMessageFor(m => m.City, null, new { @class = "validation-error-label" })
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <div class="form-group">
+                                                <label>Country:</label>
+                                                @Html.DropDownListFor(m => m.CountryId, null, "--Select Country--", htmlAttributes: new { @class = "form-control", @tabindex = "10" })
+                                                @Html.ValidationMessageFor(m => m.CountryId, "", new { @class = "validation-error-label" })
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-4" id="DisplayState">
+                                            <div class="form-group">
+                                                <label>States:</label>
+                                                @Html.DropDownListFor(m => m.StateId, null, "--Select State--", htmlAttributes: new { @class = "form-control", @tabindex = "11" })
+                                                @Html.ValidationMessageFor(m => m.StateId, "", new { @class = "validation-error-label" })
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="row">
+
+                                        <div class="col-sm-4">
+                                            <div class="form-group">
+                                                <label>Phone:</label>
+                                                @Html.TextBoxFor(m => m.Phone, new { @placeholder = "Phone", @class = "form-control", @tabindex = "12" })
+                                                @Html.ValidationMessageFor(m => m.Phone, null, new { @class = "validation-error-label" })
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                </div>
+                                <div class="panel-heading cursor-pointer mb-20" data-toggle="collapse" id="toggle3" data-target="#div4" onclick="ToggleClass(this.id);">
+                                    <h3 class="panel-title">
+                                        <i class="fa fa-minus"></i>
+                                        Burns & Wilcox Office
+                                    </h3>
+                                </div>
+                                <div id="div4" class="collapse panel-body mb-20 collapse in">
+                                    <div class="row">
+                                        <div class="col-sm-4">
+                                            <div class="form-group">
+                                                <label>Office Name:</label>
+                                                @Html.TextBoxFor(m => m.OfficeId, new { @placeholder = "Office Name", @class = "form-control", @tabindex = "13" })
+                                                @Html.ValidationMessageFor(m => m.OfficeId, null, new { @class = "validation-error-label" })
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <div class="form-group">
+                                                <label class="control-label">
+
+                                                    Producer Name:
+                                                </label>
+                                                @Html.TextBoxFor(m => m.ProducerId, new { @placeholder = "Producer Name", @class = "form-control", @tabindex = "14" })
+                                                @Html.ValidationMessageFor(m => m.ProducerId, null, new { @class = "validation-error-label" })
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <div class="col-sm-12 btn-group mt-10 mb-10">
+                                    <a href="@Url.Action("Index","User")" tabindex="16" class="btn btn-default pull-right">Cancel</a>
+                                    <button class="btn btn-primary pull-right mr-5" tabindex="15" type="submit">Save</button>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </fieldset>
+</div>
+<script>
+    $(window).load(function () {
+        if ('@Model.StateId' == '0') {
+            $("#StateId").attr('disabled', true);
+        }
+        else {
+            $('#CountryId').trigger("change");
+        }
+    });
+
+    $(document).ready(function () {
+        $('#CountryId').change(function () {
+            $("#StateId").attr('disabled', false);
+            $("#StateId").empty();
+            $.ajax({
+                type: "post",
+                url: '@Url.Action("GetStateList", "Login")',
+                data: { CountryId: $('#CountryId').val() },
+                datatype: "json",
+                traditional: true,
+                success: function (data) {
+                    $("#StateId").append('<option value="">--Select State--</option>');
+                    $.each(data, function (index, row) {
+                        $("#StateId").append('<option value="' + row.StateId + '">' +
+                            row.StateName + '</option>');
+                    });
+
+                    if ('@Model.StateId' != '0') {
+                        $("#StateId").val('@Model.StateId');
+                    }
+                }
+            });
+        });
+    });
+    /// toggle the bootsrap collaps///
+    function ToggleClass(e) {
+        $('#' + e).find('i').toggleClass('glyphicon-plus fa fa-minus mr-10 ')
+    }
+
+    /// cascading of StateDropdown///
+    function filterProducts() {
+        return {
+            CountryName: $("#CountryName").val()
+        };
+    }
+
+    //using the form as the jQuery selector (recommended)
+    $('form').submit(function (evt) {
+        debugger;
+        if ($("#toggle1").hasClass("collapsed")) {
+            $("#toggle1").trigger("click");
+        }
+
+        if ($("#toggle2").hasClass("collapsed")) {
+            $("#toggle2").trigger("click");
+        }
+
+        if ($("#toggle3").hasClass("collapsed")) {
+            $("#toggle3").trigger("click");
+        }
+    });
+
+
+</script>

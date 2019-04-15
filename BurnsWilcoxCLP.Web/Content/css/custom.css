@@ -1,0 +1,420 @@
+* { margin:0; padding:0; }
+
+@font-face {
+    font-family: 'robotoregular';
+    src: url('/Content/fonts/roboto-regular-webfont.eot');
+    src: url('/Content/fonts/roboto-regular-webfont.eot?#iefix') format('embedded-opentype'),
+         url('/Content/fonts/roboto-regular-webfont.woff2') format('woff2'),
+         url('/Content/fonts/roboto-regular-webfont.woff') format('woff'),
+         url('/Content/fonts/roboto-regular-webfont.ttf') format('truetype'),
+         url('/Content/fonts/roboto-regular-webfont.svg#robotoregular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+a:hover, a:focus {
+	text-decoration:none;
+}
+
+.mt-0 {
+	margin-top:0;
+}
+.mb-0 {
+	margin-bottom:0;
+}
+.mt-25{
+    margin-top: 25px;
+}
+.mt-15{
+    margin-top: 15px;
+}
+.ml-0 {
+	margin-left:0;
+}
+.mr-0 {
+	margin-right:0;
+}
+.marginZero {
+	margin:0;
+}
+.paddingZero {
+  padding: 0px;
+}
+.pt-0 {
+	padding-top:0;
+}
+.pt-30{
+  padding-top:30px;
+}
+.pt-25{
+	padding-top: 25px;
+}
+.pl-0 {
+	padding-left:0;
+}
+.pr-0 {
+	padding-right:0;
+}
+.pl-10 {
+	padding-left: 10px;
+}
+
+.navbar { border-radius:0; }
+.navbar-inverse { background:#012169; }
+.navbar-brand { height:80px; }
+
+.admin_dashbord {
+	width:320px;
+	height:130px;
+	text-align:center;
+	margin-top:75px;
+	display:inline-block;
+}
+.dashboard_icon {
+	width:80px;
+	height:80px;
+	border-radius:50%;
+	text-align:center;
+	margin:-40px auto;
+	border:2px solid #f5f5f5;
+	line-height:87px;
+	padding:10px;
+}
+.icons {
+	display:inline-block;
+	height:30px;
+	width:30px;
+	background:url(/Content/Images/icons.png) no-repeat top left;
+}
+.artCollections .icons {
+	background-position:-159px 0;
+}
+.jewellery .icons {
+	background-position:-97px 0;
+}
+.stampsCoins .icons {
+	background-position:-128px 0;
+}
+.instruments .icons {
+	background-position:-32px 0;
+}
+.otherStuff .icons {
+	background-position:-66px 0;
+}
+.admin_dashboard_content p {
+	color:#ffffff;
+	font-size:12px;
+	line-height:15px;
+}
+.admin_dashboard_content .dashboard_amount p {
+    font-size:22px;
+    line-height:31px;
+}
+.admin_dashboard_header {
+	font-size:22px;
+	color:#ffffff;
+	text-transform:uppercase;
+	padding-top:40px;
+}
+.artCollections, .artCollections .dashboard_icon {
+	background-color:#159f85;
+}
+.artCollections  + .more_info {
+	background-color:#109275;
+}
+.jewellery, .jewellery .dashboard_icon {
+	background-color:#f39c11;
+}
+.jewellery  + .more_info {
+	background-color:#da8c0f;
+}
+.stampsCoins, .stampsCoins .dashboard_icon {
+	background-color:#2382bf;
+}
+.stampsCoins  + .more_info {
+	background-color:#2372aa;
+}
+.ExpensiveGuns, .ExpensiveGuns .dashboard_icon {
+	background-color:#e84c3d;
+}
+.ExpensiveGuns  + .more_info {
+	background-color:#d04235;
+}
+.otherStuff, .otherStuff .dashboard_icon {
+	background:#673ab7;
+}
+.otherStuff  + .more_info {
+	background-color:#5320ac;
+}
+.instruments, .instruments .dashboard_icon {
+	background:#03a9f4;
+}
+.instruments  + .more_info {
+	background-color:#0286c2;
+}
+.more_info {
+	padding:5px;
+	text-align:center;
+	width:320px;
+	display:inline-block;
+}
+.more_info .checkbox-inline {
+	color:#fff;
+}
+.more_info .checker span:after {
+	color:#fff;
+}
+    .more_info label {
+        padding-bottom:0;
+    }
+.more_info .checker span {
+	border-color:#fff;
+}
+/* .dropdown-user:hover, .user-message:hover, .dropdown-user:focus, .user-message:focus, .dropdown-user:active, .user-message:active {
+  background-color: #243239;
+} */
+.quoteWizard .panel-heading {
+	float:left;
+	width:100%;
+}
+.navbar-inverse .navbar-nav > .open > a, .navbar-inverse .navbar-nav > .open > a:focus, .navbar-inverse .navbar-nav > .open > a:hover {
+	background:transparent;
+}
+.assestInfo {
+	float:left;
+	width:100%;
+	border-bottom:solid 1px #e5e5e5;
+	padding:0 10px 5px;
+	margin-bottom:20px;
+}
+.assestInfo:last-child {
+	border:none;
+	padding-bottom:0;
+	margin:0;
+}
+.assestSummery, .assestSummery .panel-body {
+	float:left;
+	width:100%;
+}
+.assestSummery label {
+	float:left;
+	font-size:17px;
+	line-height:25px;
+	margin:0;
+}
+.assestInfo label:nth-child(odd) {
+	width:60%;
+}
+.assestInfo label:nth-child(even) {
+	width:30%;
+	text-align:right;
+}
+.close-button {
+	float: right;
+    padding-left: 15px;
+    padding-top: 2px;
+    width: 10%;
+    color:#000;
+}
+.addCollection {
+	float:right;
+	width:25px;
+	height:25px;
+	    padding: 2px 7px;
+	background:#ffffff;
+	border-radius:5px;
+	border: 1px solid #012169;
+}
+.addCollection i {
+	color:#012169;
+	font-size: 13px;
+}
+#addCollection .modal-header, #addCollection .modal-body, #addCollection .modal-footer, #addCollection .modal-content {
+	float:left;
+	width:100%;
+}
+#addCollection .dropdown-toggle {
+	float:left;
+	width:100%;
+	text-align:left;
+	position:relative;
+	padding-right:30px;
+}
+#addCollection .dropdown-toggle .caret {
+	position:absolute;
+	top:9px;
+	right:10px;
+}
+.btn-primary {
+	background:#012169;
+}
+.h3.panel-title, h3.panel-title {
+	font-size: 14px;
+}
+.user {
+	background-color: #fff;
+    border-radius: 50%;
+    color: #012169;
+    float: left;
+    font-size: 20px;
+    font-weight: bold;
+    height: 30px;
+    margin-right: 0;
+    padding-top: 5px;
+    text-align: center;
+    width: 30px;
+}
+.dashboard_amount {
+    float: left;
+    margin-left:25%;
+    width: 50%;
+}
+.checkbox-inline, .radio-inline {
+	padding-bottom: 14px;
+}
+.uploader[class*="bg-"] .action {
+	background-color: #012169;
+	border-color: #012169;
+}
+.dashboard_amount p {
+	width:15%;
+	float: right;
+}
+.dashboard_amount input {
+	color: #fff;
+    float: right;
+    font-weight: normal;
+    width:85%;
+    width: calc(100%-31px);
+    background: transparent;
+    border:none;
+    border-bottom: 1px solid #fff;
+    padding:3px 0 1px;
+    font-size:18px;
+    line-height:20px;
+}
+.dashboard_amount input[type=number]::-webkit-outer-spin-button,
+.dashboard_amount input[type=number]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.dashboard_amount input[type=number] {
+    -moz-appearance:textfield;
+}
+iframe {
+	width:100%;
+	float: left;
+	height: 400px;
+}
+.form-group .checker {
+	cursor: pointer;
+    left: 46px;
+    position: relative;
+    top: -17px;
+}
+textarea.form-control {
+	resize: none;
+}
+.login_background {
+	background: url("/Content/images/login-background.jpg") no-repeat center center / cover;
+    width: 100%;
+    float: left;
+    height: 100%;
+}
+ .assestInfo .k-grid-norecords-template {
+    width: 163px;
+}
+.assestInfo  .k-grid {
+    border: none;
+}
+
+.footer {
+    width:100%;
+    float:left;
+    background-color: #fff;
+    text-align:center;
+    padding:7px;
+    position:absolute;
+    bottom:0;
+    border-top:1px solid #e5e5e5;
+}
+.footer p{
+    margin:0;
+}
+.forgot-password {
+    margin-top:-20px;
+    margin-bottom:20px;
+}
+.register-user {
+    width:calc(100% - 120px);
+    float:right;
+     margin-bottom:30px;
+}
+table.dataTable thead th {
+    padding-left: 10px !important;
+    font-weight: normal !important;
+    border: 1px solid #bbb !important;
+
+}
+table.dataTable thead {
+    background-color:#f2f2f2;
+}
+table.dataTable.no-footer {
+    border-bottom: 1px solid #ddd !important;
+}
+.page-container {
+    height:100%;
+}
+#DivChangepasswordModel .modal-dialog {
+    width: 400px;
+    margin: 120px auto;
+}
+.sidebar {
+    background-color: #012169;
+}
+.page-container {
+    min-height: 680px !important;
+}
+.available-user {
+    width:590px;
+    float:left;
+}
+.select-user {
+    width:590px;
+    float:right;
+}
+.genarators {
+    position:relative;
+    top: 85px;
+}
+ .Add-btn {
+     position:absolute;
+     top:23px;
+ }
+ .userLogo label, .icon-paragraph-justify3 {
+     color:#fff;
+ }
+ .dataTables_length select {
+     margin-top:10px;
+ }
+ .navigation>li.active>a, .navigation>li.active>a:focus, .navigation>li.active>a:hover {
+     background-color:#aaa;
+ }
+ .navigation {
+     padding:0px;
+ }
+ .category-title {
+     padding:10px 48px 20px 0px;
+ }
+
+ 
+
+
+/*Viral Patel*/
+.breadcrumb {
+
+margin-bottom:20px;
+
+}

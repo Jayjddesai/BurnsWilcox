@@ -1,0 +1,154 @@
+﻿@model BurnsWilcoxCLP.Models.TeamEntity
+
+@*<script src="~/Scripts/jquery-1.10.2.min.js"></script>*@
+<script src="~/Scripts/jquery.dataTables.min.js"></script>
+<link href="~/Content/css/jquery.dataTables.min.css" rel="stylesheet" />
+<div class="content">
+    @Html.Partial("_Notifications")
+        <a class="btn btn-primary mb-2 Add-btn mt-20" href="@Url.Action("AddEditTeam", "Team", new { teamId=0 })">
+            <span class="glyphicon glyphicon-plus" style="font-weight: bold;">ADD</span>
+        </a>
+    <table class="table datatable-basic table-hover table-bordered" id="tblTeam"></table>
+</div>
+@*<div class="modal" id="ViewTeamMember" style="display:none;" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true" id="Closemodel">×</button>
+                <h4 class="modal-title">View Team Member</h4>
+            </div>
+            <div class="modal-body">
+                <div id="Container">
+                </div>
+               
+
+            </div>
+        </div>
+
+    </div>
+</div>*@
+
+
+
+<div class="modal fade" id="ViewTeamMember">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true" id="Closemodel">×</button>
+                <h4 class="modal-title">View Team Member</h4>
+            </div>
+            <div class="modal-body">
+                <div id="Container">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+    <script>
+
+    $(document).ready(function () {
+        BindTeamData();
+    });
+
+    function BindTeamData() {
+        var TeamData = [];
+        $.ajax({
+            url: '@Url.Action("GetTeamList", "Team")',
+            dataType: "json",
+            async: true,
+
+            success: function (data) {
+                debugger;
+                TeamData = data.GetTeamList;
+                if ($.fn.DataTable.isDataTable("#tblTeam")) {
+                    $('#tblTeam').DataTable().destroy();
+                }
+
+                $('#tblTeam').DataTable({
+
+                    
+                    data: TeamData,
+                    "bDestroy": true,
+                    "dom": '<"top"f><rt><"bottom"lip<"clear">>',
+                    "aLengthMenu": [10, 20, 50, 100, 200],
+                    "pageLength": 10,
+                    "orderSequence": ["desc", "asc"],
+                    "order": [[2, 'asc']],
+                    "bAutoWidth": false,
+                    "columns": [
+                        { "title": "Id", "data": "TeamId", "visible": false },
+                        { "title": "Name", "data": "TeamName", "orderable": true, },
+                       
+
+
+
+                         //{ "title": "EffectiveDate", "data": "EffectiveDate", "orderable": true, "visible": false },
+
+                        {
+                            "title": "Effective Date", "data": "dateeffective", "orderable": true,
+                         
+                        },
+                        {
+                            "title": "Action", "sClass": "action", "sorting": false,
+                            "render": function (data, type, row) {
+                                @*var urlDelete = '@Url.Action("Delete", "Shift")?id=' + row.TeamId;*@
+                                var urlEdit = '@Url.Action("AddEditTeam", "Team")?teamId=' + row.TeamId;
+                                var urlView = '@Url.Action("Create", "Shift")id=' + row.TeamId;
+
+                                return '<a  onclick="ViewTeamMember(' + row.TeamId + ')"><i class="glyphicon glyphicon-user"></i></a>' + '&nbsp' + '<a href=' + urlEdit + ' class="cursior-pointer "><i class="glyphicon glyphicon-edit buttoncolor"></i></a>'
+                                //+ '&nbsp' + '<a onclick="DeleteConfirm(' + row.TeamId + ')"><i class="glyphicon glyphicon-remove buttoncolor"></i></a>';
+
+
+                            }
+                        },
+                          { "title": "AvailableUser", "data": "AvailableUser", "visible": false },
+                           { "title": "CreatedBy", "data": "CreatedBy", "visible": false },
+                             { "title": "CreatedOn", "data": "CreatedOn", "visible": false },
+                              { "title": "ModifiedOn", "data": "ModifiedOn", "visible": false },
+                               { "title": "ModifiedBy", "data": "ModifiedBy", "visible": false },
+                                 { "title": "SelectUser", "data": "SelectUser", "visible": false },
+                                  { "title": "TeamMemberName", "data": "TeamMemberName", "visible": false },
+                                   { "title": "EffectiveDate", "data": "EffectiveDate", "visible": false },
+
+
+                    ],
+                    "initComplete": function () {
+                        var dataTable = $('#tblTeam').DataTable();
+
+                    },
+                    "fnDrawCallback": function () {
+
+                    }
+                });
+            }
+        });
+    }
+
+
+
+    function DeleteConfirm(e) {
+
+    }
+
+    function ViewTeamMember(Id)
+    {
+        debugger;
+        var id = Id;
+        $.ajax({
+            type: "GET",
+            url: '@Url.Action("ViewTeamMember", "Team")?Id=' + id,
+            dataType: 'html',
+            success: function (data) {
+                debugger;
+                $('#Container').html(data);
+                $('#ViewTeamMember').modal('show')
+            
+            }
+        });
+
+    }
+
+    </script>

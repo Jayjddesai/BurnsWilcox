@@ -1,0 +1,49 @@
+﻿@using Kendo.Mvc.UI
+@model BurnsWilcoxCLP.Models.LOBEntity
+
+@using (Html.BeginForm("SavePolicyLOB", "LOB", FormMethod.Post, new { id = "formLOB"}))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+    <div class="row pt-30">
+        <div class="col-sm-12">
+            <div class="form-group col-sm-4">
+                <label>Line of business</label>
+                @(Html.Kendo().DropDownListFor(m => m.LOBId)
+                      .Name("LOBId")
+                      .OptionLabel("Select LOB...")
+                      .DataTextField("Name")
+                      .DataValueField("Id")
+                      .BindTo((System.Collections.IEnumerable)ViewBag.LOBList)
+                      .HtmlAttributes(new { style = "width: 100%" })
+                      )
+                @Html.ValidationMessageFor(m=>m.LOBId)
+            </div>
+            <div class="form-group col-sm-4">
+                <label>Product</label>
+                @(Html.Kendo().DropDownListFor(m => m.ProductId)
+                      .Name("ProductId")
+                      .OptionLabel("Select Product...")
+                      .DataTextField("Name")
+                      .DataValueField("Id")
+                      .BindTo((System.Collections.IEnumerable)ViewBag.ProductList)
+                      .HtmlAttributes(new { style = "width: 100%" })
+                      )
+                @Html.ValidationMessageFor(m => m.ProductId)
+            </div>
+            <div class="form-group col-sm-4">
+                <label>State</label>
+                @(Html.Kendo().DropDownListFor(m => m.StateId)
+                      .Name("StateId")
+                      .OptionLabel("Select State...")
+                      .DataTextField("Name")
+                      .DataValueField("Id")
+                      .BindTo((System.Collections.IEnumerable)ViewBag.StateList)
+                      .HtmlAttributes(new { style = "width: 100%" })
+                      )
+                @Html.ValidationMessageFor(m => m.StateId)
+            </div>
+        </div>
+    </div>
+}

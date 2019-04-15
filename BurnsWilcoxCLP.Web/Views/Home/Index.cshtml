@@ -1,0 +1,83 @@
+﻿
+<h1>
+    Dashboard
+</h1>
+
+
+@*<div class="">
+    <div class="">
+        <div class="">
+            <div class="page-header">
+                <div class="page-header-content">
+                    <div class="page-title">
+                        <h4><i class="icon-arrow-left52 position-left"></i> <span class="text-semibold">Home</span> - Category Selection</h4>
+                    </div>
+                </div>
+            </div>
+            <div class="content quoteWizard">
+                <div class="panel panel-white">
+                    <div class="panel-heading">
+                        <h6 class="panel-title pull-left">Generate quick quote for your assests</h6>
+                        <h6 class="panel-title pull-right">Your estimated cost is: <b>$<span class="totalCost">0.00</span></b></h6>
+                    </div>
+                    <form class="steps-basic-home" action="#">
+                        <h6>Step 1</h6>
+                        <fieldset>
+                            Step 1 
+                        </fieldset>
+
+                        <h6>Step 2</h6>
+                        <fieldset>
+                            Step 2
+                        </fieldset>
+
+                        <h6>Step 3</h6>
+                        <fieldset>
+                            Step 3
+                        </fieldset>
+
+                        <h6>Step 4</h6>
+                        <fieldset>
+                            Step 4
+                        </fieldset>
+                      
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        debugger;
+        var form = $(".steps-basic-home").show();
+
+        //Initialize wizard
+        $(".steps-basic-home").steps({
+            headerTag: "h6",
+            bodyTag: "fieldset",
+            transitionEffect: "fade",
+            titleTemplate: '<span class="number">#index#</span> #title#',
+            autoFocus: true,
+            onStepChanging: function (event, currentIndex, newIndex) {
+                
+                form.validate().settings.ignore = ":disabled,:hidden";
+                return form.valid();
+            },
+
+            onStepChanged: function (event, currentIndex, priorIndex) {
+            },
+
+            onFinishing: function (event, currentIndex) {
+                form.validate().settings.ignore = ":disabled";
+                return form.valid();
+            },
+
+            onFinished: function (event, currentIndex) {
+                alert("Submitted!");
+            }
+        });
+    });
+</script>*@

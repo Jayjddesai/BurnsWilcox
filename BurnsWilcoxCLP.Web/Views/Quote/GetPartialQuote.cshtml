@@ -1,0 +1,205 @@
+﻿@model BurnsWilcoxCLP.Models.QuoteEntity
+
+@using (Html.BeginForm("GetPartialQuote", "Quote", FormMethod.Post, new { @id = "QuoteId"}))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+    
+    <style>
+        .nav-tabs.nav-tabs-solid>.active>a, .nav-tabs.nav-tabs-solid>.active>a:focus, .nav-tabs.nav-tabs-solid>.active>a:hover
+        {
+            background-color:#012169;
+        }
+    </style>
+      
+   
+    <div class=" panel panel-flat">
+
+        <!-- Main Tab  Body-->
+            <div class="panel-body">
+                <div class="panel-heading" style="">
+                    <h4 class="panel-title">Cyber Liability Questions</h4>
+                </div>
+                <div class="tobbable">
+                    <ul class="nav nav-tabs nav-justified nav-tabs-solid ">
+                        <li class="active">
+                            <a href="#solid-tab1" data-toggle="tab" aria-expanded="true">Application Information</a>
+                        </li>
+                        <li>
+                            <a href="#solid-tab2" data-toggle="tab" aria-expanded="false">General Information</a>
+                        </li>
+                        <li>
+                            <a href="#solid-tab3" data-toggle="tab" aria-expanded="false">Information Security And Privacy Controls</a>
+                        </li>
+                    </ul>
+
+                    <!-- Tab Content -->
+                    <div class="tab-content ">
+                        <!-- First Tab -->
+                        <div class="tab-pane active" id="solid-tab1">
+                            <div class="row">
+                                <div class="col-lg-3 col-md-3">
+                                    <div class="form-group">
+                                        <span>Business Description</span>
+                                        @Html.TextBoxFor(m => m.BusinessDescription, new { @class = "form-control", @placeholder = "" })
+                                        @Html.ValidationMessageFor(m => m.BusinessDescription)
+                                    </div>
+                                    <div class="form-group">
+                                        <span>NAICS Code</span>
+                                        @Html.TextBoxFor(m => m.NAICSCode, new { @class = "form-control", @placeholder = "" })
+                                        @Html.ValidationMessageFor(m => m.NAICSCode)
+                                    </div>
+                                </div>
+                                <div class=" col-lg-offset-1 col-md-offset-1 col-md-3 col-lg-3 col-lg-offset-1 col-md-offset-1">
+                                    <div class="form-group">
+                                        <span>Number of Employee</span>
+                                        @Html.TextBoxFor(m => m.NumberOfEmp, new { @class = "form-control", @placeholder = "00" })
+                                        @Html.ValidationMessageFor(m => m.NumberOfEmp)
+                                    </div>
+                                    <div class="form-group">
+                                        <span>Current Next Year Revenue</span>
+                                        @Html.TextBoxFor(m => m.CNYR, new { @class = "form-control", @placeholder = "0.00" })
+                                        @Html.ValidationMessageFor(m => m.CNYR)
+                                    </div>
+                                </div>
+                                <div class="col-lg-offset-1 col-md-offset-1 col-lg-3 col-md-3">
+                                    <div class="form-group">
+                                        <span>Project Fiscal Year Revenue</span>
+                                        @Html.TextBoxFor(m => m.PFYR, new { @class = "form-control", @placeholder = "0.00" })
+                                        @Html.ValidationMessageFor(m => m.PFYR)
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <input type="button" class="btn btn-primary" value="Next" style=" float:right;margin-right:10px;" />
+                            </div>
+                        </div>
+
+                        <!-- Second Tab-->
+                        <div class="tab-pane " id="solid-tab2">
+                            <div class="row">
+                                <div class="col-lg-3 col-md-3">
+                                    <div class="form-group">
+                                        <span>Any Previous Coverage</span>
+                                        <br /> @Html.RadioButtonFor(m => m.AnyPreviousCoverage, "Yes", new { @checked = "checked" }) <label>Yes</label>
+                                        &nbsp;   @Html.RadioButtonFor(m => m.AnyPreviousCoverage, "No") <label>No</label>
+                                    </div>
+                                    <div class="form-group">
+                                        <span>Policy Aggrigation</span>
+                                        @Html.DropDownListFor(m => m.PolicyAggrigationId, new SelectList("Id", "Name"), "--Select--", new { @class = "form-control", tabindex = "2" })
+                                        @Html.ValidationMessageFor(m => m.PolicyAggrigationId)
+                                    </div>
+                                    <div class="form-group">
+                                        <span>Network Security Limited</span>
+                                        @Html.DropDownListFor(m => m.NSLId, new SelectList("Id", "Name"), "--Select--", new { @class = "form-control", tabindex = "2" })
+                                        @Html.ValidationMessageFor(m => m.NSLId)
+                                    </div>
+                                    <div class="form-group">
+                                        <span>Privacy Limit</span>
+                                        @Html.DropDownListFor(m => m.PrivacyLimitId, new SelectList("Id", "Name"), "--Select--", new { @class = "form-control", tabindex = "2" })
+                                        @Html.ValidationMessageFor(m => m.PrivacyLimitId)
+                                    </div>
+                                </div>
+                                <div class=" col-lg-offset-1 col-md-offset-1 col-md-3 col-lg-3 col-lg-offset-1 col-md-offset-1">
+                                    <div class="form-group">
+                                        <span>Notification</span>
+                                        @Html.DropDownListFor(m => m.NotificationId, new SelectList("Id", "Name"), "--Select--", new { @class = "form-control", tabindex = "2" })
+                                        @Html.ValidationMessageFor(m => m.NotificationId)
+                                    </div>
+                                    <div class="form-group">
+                                        <span>Regular Defense/fines penalties</span>
+                                        @Html.DropDownListFor(m => m.RDFPId, new SelectList("Id", "Name"), "--Select--", new { @class = "form-control", tabindex = "2" })
+                                        @Html.ValidationMessageFor(m => m.RDFPId)
+                                    </div>
+                                    <div class="form-group">
+                                        <span>PCI Fines and Penalties</span>
+                                        @Html.DropDownListFor(m => m.PCIFAPId, new SelectList("Id", "Name"), "--Select--", new { @class = "form-control", tabindex = "2" })
+                                        @Html.ValidationMessageFor(m => m.PCIFAPId)
+                                    </div>
+                                    <div class="form-group">
+                                        <span>Data Restoration</span>
+                                        @Html.DropDownListFor(m => m.DataRestorationId, new SelectList("Id", "Name"), "--Select--", new { @class = "form-control", tabindex = "2" })
+                                        @Html.ValidationMessageFor(m => m.DataRestorationId)
+                                    </div>
+                                </div>
+                                <div class="col-lg-offset-1 col-md-offset-1 col-lg-3 col-md-3">
+                                    <div class="form-group">
+                                        <span>Extortion</span>
+                                        @Html.DropDownListFor(m => m.ExtortionId, new SelectList("Id", "Name"), "--Select--", new { @class = "form-control", tabindex = "2" })
+                                        @Html.ValidationMessageFor(m => m.ExtortionId)
+                                    </div>
+                                    <div class="form-group">
+                                        <span>Network Business Interruption</span>
+                                        @Html.DropDownListFor(m => m.NBId, new SelectList("Id", "Name"), "--Select--", new { @class = "form-control", tabindex = "2" })
+                                        @Html.ValidationMessageFor(m => m.NBId)
+                                    </div>
+                                    <div class="form-group">
+                                        <span>Cyber Crime</span>
+                                        @Html.DropDownListFor(m => m.CyberCrimeId, new SelectList("Id", "Name"), "--Select--", new { @class = "form-control", tabindex = "2" })
+                                        @Html.ValidationMessageFor(m => m.CyberCrimeId)
+                                    </div>
+                                    <div class="form-group">
+                                        <span>Media/Website Content</span>
+                                        @Html.DropDownListFor(m => m.MWContentId, new SelectList("Id", "Name"), "--Select--", new { @class = "form-control", tabindex = "2" })
+                                        @Html.ValidationMessageFor(m => m.MWContentId)
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <input type="button" class="btn btn-primary" value="Previous" style=" float:left;margin-left:10px;" />
+                                <input type="button" class="btn btn-primary" value="Next" style=" float:right;margin-right:10px;" />
+                            </div>
+                        </div>
+
+                        <!-- Third Tab-->
+                        <div class="tab-pane " id="solid-tab3" style="padding:15px;">
+                            <div class="row">
+                                <div class="jumbotron" style="padding:15px;">
+                                    <h6>
+                                        E. If you store and process credit card information and do not have a third party payment processor that accepts
+                                        all liability for PCI compliance , you have been certified as being PCI Complient within the last 12 month , or have
+                                        successfully completed a self assesment audit.
+                                    </h6>
+                                    <br /> &nbsp; @Html.RadioButtonFor(m => m.QueE, "Yes", new { @checked = "checked" }) <label>Yes</label>
+                                    &nbsp;   @Html.RadioButtonFor(m => m.QueE, "No") <label>No</label>
+
+                                    <h6>
+                                        B. If you store and process credit card information and do not have a third party payment processor that accepts
+                                        all liability for PCI compliance , you have been certified as being PCI Complient within the last 12 month , or have
+                                        successfully completed a self assesment audit.
+                                    </h6>
+                                    <br />  &nbsp; @Html.RadioButtonFor(m => m.QueB1, "Yes", new { @checked = "checked" }) <label>Yes</label>
+                                    &nbsp;   @Html.RadioButtonFor(m => m.QueB1, "No") <label>No</label>
+
+                                    <h6>
+                                        If you store and process credit card information and do not have a third party payment processor that accepts
+                                        all liability for PCI compliance , you have been certified as being PCI Complient within the last 12 month , or have
+                                        successfully completed a self assesment audit.
+                                    </h6>
+                                    <br /> &nbsp; @Html.RadioButtonFor(m => m.QueB2, "Yes", new { @checked = "checked" }) <label>Yes</label>
+                                    &nbsp;   @Html.RadioButtonFor(m => m.QueB2, "No") <label>No</label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <input type="button" class="btn btn-primary" value="Previous" style=" float:left;margin-left:10px;" />
+                                <input type="submit" class="btn btn-primary" value="Save" style=" float:right;margin-right:10px;" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+   
+  }
+
+
+@*<script type="text/javascript">
+    function SaveQuote()
+    {
+        var form1 = $('#QuoteId');
+        if(form1.valid)
+        {
+
+        }
+    }
+</script>*@

@@ -1,0 +1,260 @@
+﻿@model BurnsWilcoxCLP.Models.UserTypeEntity
+@{
+    ViewBag.Title = "Index";
+}
+<script src="~/Scripts/jquery.dataTables.min.js"></script>
+<link href="~/Content/css/jquery.dataTables.min.css" rel="stylesheet" /> 
+<div class="content">
+    <h4>Manage Access Rights</h4>
+    @Html.Partial("_Notifications")
+           <div class="panel panel-default">
+               <div class="panel-body">
+                   <label class="label">User Type</label>
+                   
+                   <div class="col-sm-6">
+
+                       @Html.DropDownListFor(m => m.UserTypeId, null, "--Select userType--", htmlAttributes: new { @class = "select col-sm-2" })
+                       @Html.ValidationMessageFor(m => m.UserTypeId, "", new { @style = "color:red" })
+                   </div>
+
+               </div>
+              
+                    <div>
+                        <div class="panel-body table-responsive" id="showGrid" hidden>
+                            <table class="table panel"  id="tbluserMenuAccess">    </table>
+
+
+                            <button class="btn btn-orange mt-5 mr-10 pull-right" id="save" type="button">Save</button>
+                        </div>
+                    </div>
+             
+
+               </div>
+               </div>
+<script type="text/javascript">
+    $('#UserTypeId').change(function () {
+        debugger
+        var userTypeId = $('#UserTypeId').val();
+        $("#showGrid").show();
+        if (userTypeId == ""  || userTypeId == undefined)
+        {
+            $("#showGrid").hide();
+        }
+        
+        BindMenuAccess(userTypeId);
+        debugger
+        //$("#tbluserMenuAccess").removeClass("dataTable");
+    });
+
+    function PrepareDataToSave() {
+        var modelList = [];
+        var objmodel = new Object();
+        $("#tbluserMenuAccess tbody tr").each(function (index, item) {
+
+            objmodel = new Object();
+
+            objmodel["UserTypeMenuId"] = $(item).find("input[type=hidden]").attr("data-usertypemenuid");
+            objmodel["MenuId"] = $(item).find("input[type=hidden]").attr("data-menuid");
+            objmodel["UserTypeId"] = $('#UserTypeId').val();
+            objmodel["IsAdd"] = $(item).find('input[data-menu="IsAdd"]').prop("checked");
+            objmodel["IsDelete"] = $(item).find('input[data-menu="IsDelete"]').prop("checked");
+            objmodel["IsView"] = $(item).find('input[data-menu="IsView"]').prop("checked");
+            objmodel["IsEdit"] = $(item).find('input[data-menu="IsEdit"]').prop("checked");
+
+            modelList.push(objmodel);
+        });
+
+        return modelList;
+    }
+
+    function BindMenuAccess(userTypeId) {
+        debugger
+        var TeamData = [];
+        $.ajax({
+            url: '@Url.Action("UserAccesRight", "UserRights")',
+            data: { 'userTypeId': userTypeId },
+            dataType: "json",
+            async: true,
+            success: function (data) {
+                TeamData = data.userList;
+                if ($.fn.DataTable.isDataTable("#tbluserMenuAccess")) {
+                    $('#tbluserMenuAccess').DataTable().destroy();
+                }
+                $('#tbluserMenuAccess').DataTable({
+                    data: TeamData,
+                    "bDestroy": true,
+                    "dom": '<"top"><><"bottom"<"clear">>',
+                    "aLengthMenu": [10, 20, 50, 100, 200],
+                    "pageLength": 10,
+                    "orderSequence": ["desc", "asc"],
+                    "bAutoWidth": false,
+                    "columns": [
+                        { "data": "MenuId", "visible": false, },
+                { "data": "UserTypeMenuId", "visible": false, },
+                { "data": "UserTypeId", "visible": false, },
+
+                        { "title": "MenuName", "data": "MenuName", "orderable": false, "order": [] },
+                        {
+                            "title": "Add", "data": "IsAdd",
+                            "sTitle": "Add</br><input type='checkbox' class=checker id='chkHeaderAdd' onclick='checkAllAdd(this)'/>",
+                            
+                            "sorting": "false",
+                            "orderable": false, "order": [],
+                            "render": function (data, type, row) {
+                                var hidden = '<input type="hidden" data-usertypemenuid=' + row.UserTypeMenuId + '  data-menuid=' + row.MenuId + '>';
+                                if (row.IsAdd == true) {
+                                    return hidden + '<input type="checkbox" data-menu="IsAdd" class="editor-active checker"  checked onclick="SetHeaderCheckboxStatus()">';
+                                }
+                                else {
+                                    return hidden + '<input type="checkbox"  data-menu="IsAdd" class="editor-active checker"  onclick="SetHeaderCheckboxStatus()">';
+                                }
+                            }
+                        },
+
+
+                        {
+                            "title": "Delete", "data": "IsDelete",
+                            "sTitle": "Delete</br><input type='checkbox' class=checker id='chkHeaderDelete' onclick='checkAllDelete(this)'/>",
+                            "sClass": "action",
+                            "sorting": "false",
+                            "orderable": false, "order": [],
+                            "render": function (data, type, row) {
+                                if (row.IsDelete == true) {
+                                    return '<input type="checkbox" data-menu="IsDelete"  class="editor-active checker" checked onclick="SetHeaderCheckboxStatus()">';
+                                }
+                                else {
+                                    return '<input type="checkbox" data-menu="IsDelete"  class="editor-active checker" onclick="SetHeaderCheckboxStatus()">';
+                                }
+                            }
+                        },
+                         {
+                             "title": "View", "data": "IsView",
+                             "sTitle": "View</br><input type='checkbox' class=checker id='chkHeaderView'  onclick='checkAllView(this)'/>",
+                             "sClass": "action",
+                             "sorting": "false",
+                             "orderable": false, "order": [],
+                             "render": function (data, type, row) {
+                                 if (row.IsView == true) {
+                                     return '<input type="checkbox"  data-menu="IsView" class="editor-active checker" checked onclick="SetHeaderCheckboxStatus()">';
+                                 }
+                                 else {
+                                     return '<input type="checkbox" data-menu="IsView" class="editor-active checker" onclick="SetHeaderCheckboxStatus()">';
+                                 }
+                             }
+                         },
+                    {
+
+                        "title": "Edit", "data": "IsEdit",
+                        "sTitle": "Edit</br><input type='checkbox' class=checker id='chkHeaderEdit' onclick='checkAllEdit(this)'/>",
+                        "sClass": "action",
+                        "sorting": "false",
+                        "orderable": false, "order": [],
+                        "render": function (data, type, row) {
+                            if (row.IsEdit == true) {
+                                return '<input type="checkbox" data-menu="IsEdit"  class="editor-active checker" checker checked onclick="SetHeaderCheckboxStatus()">';
+                            }
+                            else {
+                                return '<input type="checkbox" data-menu="IsEdit" class="editor-active checker" onclick="SetHeaderCheckboxStatus()">';
+                            }
+                        }
+                    },
+                    ], 
+                    "initComplete": function () {
+                        var dataTable = $('#tbluserMenuAccess').DataTable();
+
+                    },
+                    "fnDrawCallback": function () {
+                        SetHeaderCheckboxStatus();
+                    }
+                });
+            }
+        });
+    }
+
+
+    $("#save").click(function () {
+        var modelList = PrepareDataToSave();
+        $.ajax({
+            url: '@Url.Action("Save", "UserRights")',
+            data: JSON.stringify({ "model": modelList }),
+            contentType: 'application/json; charset=utf-8',
+            type: 'POST',
+            dataType: 'json',
+
+            success: function (data) {
+                alert(data);
+            }
+        });
+    });
+    function checkAllAdd(ele) {
+        if (ele.id == "chkHeaderAdd")
+        {
+            debugger
+            if (ele.checked == false) {
+                $('#tbluserMenuAccess tbody input[data-menu="IsAdd"]').prop("checked", false)
+            }
+            else {
+                $('#tbluserMenuAccess tbody input[data-menu="IsAdd"]').prop("checked", true)
+            }
+        }
+    }
+
+     
+
+    function SetHeaderCheckboxStatus()
+    {
+        var length = $('#tbluserMenuAccess tbody input[data-menu="IsAdd"]').length
+        var totallength = $('#tbluserMenuAccess tbody input[data-menu="IsAdd"]:checked').length
+        $("#tbluserMenuAccess").find("input[id=chkHeaderAdd]").prop("checked", length == totallength);
+
+        var length = $('#tbluserMenuAccess tbody input[data-menu="IsDelete"]').length
+        var totallength = $('#tbluserMenuAccess tbody input[data-menu="IsDelete"]:checked').length
+        $("#tbluserMenuAccess").find("input[id=chkHeaderDelete]").prop("checked", length == totallength);
+
+        var length = $('#tbluserMenuAccess tbody input[data-menu="IsView"]').length
+        var totallength = $('#tbluserMenuAccess tbody input[data-menu="IsView"]:checked').length
+        $("#tbluserMenuAccess").find("input[id=chkHeaderView]").prop("checked", length == totallength);
+
+        var length = $('#tbluserMenuAccess tbody input[data-menu="IsEdit"]').length
+        var totallength = $('#tbluserMenuAccess tbody input[data-menu="IsEdit"]:checked').length
+        $("#tbluserMenuAccess").find("input[id=chkHeaderEdit]").prop("checked", length == totallength);
+    }
+    
+    function checkAllDelete(ele) {
+        if (ele.id == "chkHeaderDelete") {
+            debugger
+            if (ele.checked == false) {
+                $('#tbluserMenuAccess tbody input[data-menu="IsDelete"]').prop("checked", false)
+            }
+            else {
+                $('#tbluserMenuAccess tbody input[data-menu="IsDelete"]').prop("checked", true)
+            }
+        }
+    }
+
+
+    function checkAllView(ele) {
+        if (ele.id == "chkHeaderView") {
+            debugger
+            if (ele.checked == false) {
+                $('#tbluserMenuAccess tbody input[data-menu="IsView"]').prop("checked", false)
+            }
+            else {
+                $('#tbluserMenuAccess tbody input[data-menu="IsView"]').prop("checked", true)
+            }
+        }
+    }
+    function checkAllEdit(ele) {
+        if (ele.id == "chkHeaderEdit") {
+            debugger
+            if (ele.checked == false) {
+                $('#tbluserMenuAccess tbody input[data-menu="IsEdit"]').prop("checked", false)
+            }
+            else {
+                $('#tbluserMenuAccess tbody input[data-menu="IsEdit"]').prop("checked", true)
+            }
+        }
+    }
+
+
+</script>

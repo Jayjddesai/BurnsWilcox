@@ -1,0 +1,277 @@
+﻿@model BurnsWilcoxCLP.Models.TeamEntity
+
+@Html.HiddenFor(m => m.TeamId)
+<div class="col-sm-6">
+    <div class="form-group available-user">
+        <label>Users:</label>
+        @Html.ListBox("AvailableUser", Model.AvailableUser, new { @class = "form-control datetime", @tabindex = "3", @id = "AvailableUser" })
+        @Html.ValidationMessage("AvailableUser", null, new { @class = "validation-error-label" })
+    </div>
+</div>
+<div class="col-sm-6 mt-25 select-user">
+    <div class="form-group">
+        @Html.ListBox("SelectUser", Model.SelectUser, new { @class = "form-control datetime ", @tabindex = "4", @id = "SelectUser" })
+        @Html.ValidationMessage("SelectUser", null, new { @class = "validation-error-label" })
+    </div>
+</div>
+<div class="genarators">
+    <button class="btn btn-primary mt-5 mr-10" id="AddTeamMember" onclick="SaveTeamMember();" value=">"> ></button>
+    <button class="btn btn-primary mt-5 mr-10" value="<" id="DeleteTeamMember" onclick="DeleteTeamMember();"> < </button>
+</div>
+
+
+<script>
+
+    $(document).ready(function () {
+    });
+
+        $("#AddTeamMember").click(function (e) {
+            debugger;
+            var AvailableUser = $("#AvailableUser").val();
+            var TeamId = $("#TeamId").val();
+            if (AvailableUser != null)
+            {
+                debugger;
+                $.ajax({
+                    type: "Get",
+                    url: '@Url.Action("SaveTeamMember", "Team")',
+                    data: { TeamId: parseInt(TeamId), UserId: AvailableUser.toString() },
+                    datatype: "JSON",
+                    success: function (data) {
+                        window.location.reload();
+
+                    }
+
+                });
+
+           
+            }
+            else
+            {
+                alert("Please select the user")
+            }
+           
+            e.preventDefault();
+
+        })
+
+    $("#DeleteTeamMember").click(function (e) {
+            debugger;
+            var DeleteUsers = $("#SelectUser").val();
+            var TeamId = $("#TeamId").val();
+            if (DeleteUsers != null)
+            {
+                $.ajax({
+                    type: "Get",
+                    url: '@Url.Action("DeleteTeamMember", "Team")',
+                    data: { TeamId: parseInt(TeamId), UserId: DeleteUsers.toString() },
+                    datatype: "JSON",
+                    success: function (data) {
+                   
+                        @*@Html.Partial("~/Views/Team/GetUserFromTeam.cshtml");*@
+                        window.location.reload();
+                    }
+
+                });
+            }
+            else
+            {
+                alert("Please select the user")
+
+            }
+        
+          e.preventDefault();
+
+        });
+            
+        
+
+        //$("#SelectedUser").click(function (e) {
+
+        //    var SelectUserUser = $("#SelectUser").val();
+        //    e.preventDefault();
+        //})
+
+
+
+   
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    @*function AvailableUser(e) {
+        debugger;
+        var AvailableUser = $("#AvailableUser").val();
+
+    }
+
+
+    function Savedata(UserId) {
+        var TeamId = $("#TeamId").val();
+        var UserId = UserId;
+
+        $.ajax({
+
+            url: '@Url.Action("", "")?=TeamId' + TeamId + '&UserId=' + UserId,
+            datatype: "JSON",
+            success: function (data) {
+                //$("#DivChangepasswordModel").modal('hide');
+
+            }
+
+        });
+
+    }*@
+
+
+</script>

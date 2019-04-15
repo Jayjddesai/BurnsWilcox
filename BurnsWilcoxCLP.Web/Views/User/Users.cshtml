@@ -1,0 +1,60 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@model  List<BurnsWilcoxCLP.Models.UserMasterList>
+@using BurnsWilcoxCLP.Models;
+
+<ul class="breadcrumb">
+    <li><a href="index.html"><i class="icon-home2 position-left"></i> Home</a></li>
+    <li class="active">User List</li>
+</ul>
+@Html.Partial("_Notifications")
+<div class="panel panel-flat">
+
+    <div class="panel-body">
+        <div class="panel-heading">
+            <h5 class="panel-title">
+                <b>User List</b>
+                <a href="@Url.Action("AddUser", "User")"class="btn btn-default pull-right"><span>Add User<i class="icon-add position-right"></i></span></a>
+            </h5>
+        </div>
+    </div>
+    <table class="table datatable-button-excel-pdf">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Email Address</th>
+                <th>Access Code</th>
+                <th>User Type</th>
+                @*<th>Office Name</th>
+                <th>Producer Name</th>*@
+                <th>Agency Name</th>
+                <th>Email Verified</th>
+                <th>User Verified</th>
+                <th>Status</th>
+                <th class="text-center">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (UserMasterList data in Model)
+            {
+                <tr>
+                    <td>@data.Name</td>
+                    <td>@data.EmailAddress</td>
+                    <td>@data.AccessCode</td>
+                    <td>@data.UserTypeName</td>
+                    @*<td>@data.OfficeName</td>
+                    <td>@data.ProducerName</td>*@
+                    <td>@data.AgencyName</td>
+                    <td>@data.IsEmailVerified</td>
+                    <td>@data.IsUserVerified</td>
+                    <td>@data.IsActive</td>
+                    <td class="text-center btn-group">
+                        <a href="@Url.Action("ManageUser", "User", new { UserId = data.UserId })" class="btn btn-default"><i class="icon-pencil"></i></a>
+                        <a href="@Url.Action("DeleteUser", "User", new { UserId = data.UserId })" class="btn btn-default"><i class="icon-bin"></i></a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

@@ -1,0 +1,260 @@
+﻿@using BurnsWilcoxCLP.Models
+@using BurnsWilcoxCLP.Models.Common
+@{
+    var policyNumber = "XCV123456";
+}
+
+@Html.Hidden("PolicyNumber", policyNumber)
+<div class="page-container">
+    <div class="page-content">
+        <div class="content-wrapper">
+            <div class="page-header">
+                <div class="page-header-content">
+                    <div class="page-title">
+                        <h4><i class="icon-arrow-left52 position-left"></i> <span class="text-semibold">Home</span> - Create Policy</h4>
+                    </div>
+                </div>
+            </div>
+            <div class="content quoteWizard">
+                <div class="panel panel-white">
+                    <div class="panel-heading">
+                        <h6 class="panel-title pull-left"><strong>Policy Number : @policyNumber</strong></h6>
+                    </div>
+                    <div class="steps-basic-home">
+                        <h6>@Enums.PolicyWizardEnum.LOB </h6>
+                        <fieldset>
+                            <div id="@Enums.PolicyWizardEnum.LOB"></div>
+                            @*@{Html.RenderPartial("~/Views/LOB/GetPartialLOB.cshtml",new LOBEntity());}*@
+                        </fieldset>
+
+                        <h6>@Enums.PolicyWizardEnum.Party</h6>
+                        <fieldset>
+                            <div id="@Enums.PolicyWizardEnum.Party"></div>
+                            @*{Html.RenderPartial("_Party");}*@
+                        </fieldset>
+
+                        <h6>@Enums.PolicyWizardEnum.Insured</h6>
+                        <fieldset>
+                            <div id="@Enums.PolicyWizardEnum.Insured"></div>
+                            @*{Html.RenderPartial("_Insured");}*@
+                        </fieldset>
+
+                        <h6>@Enums.PolicyWizardEnum.Locations</h6>
+                        <fieldset>
+                            <div id="@Enums.PolicyWizardEnum.Locations"></div>
+                            @*@{Html.RenderPartial("_Locations");}*@
+                        </fieldset>
+
+                        <h6>@Enums.PolicyWizardEnum.Term</h6>
+                        <fieldset>
+                            <div id="@Enums.PolicyWizardEnum.Term"></div>
+                            @*@{Html.RenderPartial("_Term");}*@
+                        </fieldset>
+
+                        <h6>@Enums.PolicyWizardEnum.Quote</h6>
+                        <fieldset>
+                            <div id="@Enums.PolicyWizardEnum.Quote"></div>
+                            @*@{Html.RenderPartial("_Quote");}*@
+                        </fieldset>
+
+                        <h6>@Enums.PolicyWizardEnum.Issue</h6>
+                        <fieldset>
+                            <div id="@Enums.PolicyWizardEnum.Issue"></div>
+                            @*@{Html.RenderPartial("_Issue");}*@
+                        </fieldset>
+
+                        <h6>@Enums.PolicyWizardEnum.Endorse</h6>
+                        <fieldset>
+                            <div id="@Enums.PolicyWizardEnum.Endorse"></div>
+                            @*@{Html.RenderPartial("_Endorse");}*@
+                        </fieldset>
+
+                        <h6>@Enums.PolicyWizardEnum.Renew</h6>
+                        <fieldset>
+                            <div id="@Enums.PolicyWizardEnum.Renew"></div>
+                            @*@{Html.RenderPartial("_Renew");}*@
+                        </fieldset>
+
+                        <h6>@Enums.PolicyWizardEnum.Cancel</h6>
+                        <fieldset>
+                            <div id="@Enums.PolicyWizardEnum.Cancel"></div>
+                            @*@{Html.RenderPartial("_Cancel");}*@
+                        </fieldset>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        var form = $(".steps-basic-home").show();
+
+        //Initialize wizard
+        $(".steps-basic-home").steps({
+            headerTag: "h6",
+            bodyTag: "fieldset",
+            transitionEffect: "fade",
+            titleTemplate: '<span class="number">#index#</span> #title#',
+            autoFocus: true,
+            onStepChanging: function (event, currentIndex, newIndex) {             
+                      SaveCurrentPartial(currentIndex, newIndex);
+                LoadWizardPartial(newIndex);
+
+                form.validate().settings.ignore = ":disabled,:hidden";             
+               
+                  //   return form.valid();
+                return true;
+            },
+
+            onStepChanged: function (event, currentIndex, priorIndex) {                            
+            },
+
+            onFinishing: function (event, currentIndex) {
+                form.validate().settings.ignore = ":disabled";
+              
+               return form.valid();
+            },
+
+            onFinished: function (event, currentIndex) {
+                alert("Submitted!");
+            }
+        });
+
+        //Load 1st step
+        LoadWizardPartial(0);
+    });
+
+    function LoadWizardPartial(newIndex) {
+        var wizardName = GetWizardName(newIndex);
+        var url = '/' + wizardName + '/' + 'GetPartial' + wizardName;
+        url = url + '?policyNumber=' + $('#PolicyNumber').val();
+        $('#' + wizardName).load(url);
+    }
+
+    function SaveCurrentPartial(currentIndex, newIndex) {
+        switch (String(currentIndex)) {
+            case '@Enums.PolicyWizardEnum.LOB.GetHashCode()':
+                SavePolicyLOB();
+                break;
+            case '@Enums.PolicyWizardEnum.Party.GetHashCode()':
+                SavePolicyLOB();
+                break;
+            case '@Enums.PolicyWizardEnum.Insured.GetHashCode()':
+                SavePolicyLOB();
+                break;
+            case '@Enums.PolicyWizardEnum.Locations.GetHashCode()':
+                SavePolicyLOB();
+                break;
+            case '@Enums.PolicyWizardEnum.Term.GetHashCode()':
+                SavePolicyLOB();
+                break;
+            case '@Enums.PolicyWizardEnum.Quote.GetHashCode()':
+                SavePolicyLOB();
+                break;
+            case '@Enums.PolicyWizardEnum.Issue.GetHashCode()':
+                SavePolicyLOB();
+                break;
+            case '@Enums.PolicyWizardEnum.Endorse.GetHashCode()':
+                SavePolicyLOB();
+                break;
+            case '@Enums.PolicyWizardEnum.Renew.GetHashCode()':
+                SavePolicyLOB();
+                break;
+            case '@Enums.PolicyWizardEnum.Cancel.GetHashCode()':
+                SavePolicyLOB();
+                break;
+        }
+    }
+
+    function GetWizardName(wizardIndex) {
+        debugger
+        var wizardName = '';
+        switch (String(wizardIndex)) {
+            case '@Enums.PolicyWizardEnum.LOB.GetHashCode()':
+                wizardName = '@Enums.PolicyWizardEnum.LOB';
+                break;
+            case '@Enums.PolicyWizardEnum.Party.GetHashCode()':
+                wizardName = '@Enums.PolicyWizardEnum.Party';
+                break;
+            case '@Enums.PolicyWizardEnum.Insured.GetHashCode()':
+                wizardName = '@Enums.PolicyWizardEnum.Insured';
+                break;
+            case '@Enums.PolicyWizardEnum.Locations.GetHashCode()':
+                wizardName = '@Enums.PolicyWizardEnum.Locations';
+                break;
+            case '@Enums.PolicyWizardEnum.Term.GetHashCode()':
+                wizardName = '@Enums.PolicyWizardEnum.Term';
+                break;
+            case '@Enums.PolicyWizardEnum.Quote.GetHashCode()':
+                wizardName = '@Enums.PolicyWizardEnum.Quote';
+                break;
+            case '@Enums.PolicyWizardEnum.Issue.GetHashCode()':
+                wizardName = '@Enums.PolicyWizardEnum.Issue';
+                break;
+            case '@Enums.PolicyWizardEnum.Endorse.GetHashCode()':
+                wizardName = '@Enums.PolicyWizardEnum.Endorse';
+                break;
+            case '@Enums.PolicyWizardEnum.Renew.GetHashCode()':
+                wizardName = '@Enums.PolicyWizardEnum.Renew';
+                break;
+            case '@Enums.PolicyWizardEnum.Cancel.GetHashCode()':
+                wizardName = '@Enums.PolicyWizardEnum.Cancel';
+                break;
+        }
+        return wizardName;
+    }
+
+    function SavePolicyLOB() {
+        var form = $('#formLOB');
+
+        debugger;
+        if (form.valid) {
+            
+            AjaxCall($(form).attr('action'), form.serialize(), function () { alert('saved'); }, false, $(form).attr('method'));
+        }
+    }
+
+    function SavePolicyInsured()
+    {
+        debugger;
+    }
+
+    function AjaxCall(url, parameter, callbackFunction, isErrorHandle, dataType) {
+        if (typeof (parameter) === 'undefined') {
+            parameter = '';
+        }
+        try {
+            $.support.cors = true;
+            $.ajax({
+                url: url,
+                cache: false,
+                dataType: dataType,
+                data: parameter,
+                timeout: 40000,
+                success: function (data) {
+                    callbackFunction(data);
+                },
+                error: function (jqXhr, textStatus, errorThrown) {
+                    if (isErrorHandle === true) {
+                        callbackFunction("error");
+                    }
+                    else {
+                        if (errorThrown !== "") {
+                            //showMessageOnly("The following error occured: " + errorThrown, 'popup-error');
+                        }
+                        else {
+                            //showMessageOnly("There is an error while connecting to server. Please try again!", 'popup-error');
+                        }
+                    }
+                },
+                always: function () {
+                }
+            });
+        }
+        catch (e) {
+            //showMessageOnly("Errour occurred " + e, 'popup-error');
+        }
+    }
+</script>
